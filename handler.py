@@ -29,7 +29,7 @@ codex_prompt = '### READY ###\n\n##### Translate this function from C\n### C\n  
                'READY ###\n\n### C++\n\n#include <iostream>\nusing namespace std;\n\nint main()\n{\n    int count;\n ' \
                'for(count=1;count<=500;count++)\n        cout << "I will not throw paper airplanes in class." << ' \
                'endl;\n    return 0;\n}\n\n### READY ###\n\n### Python\n\ncount = 1\nwhile count <= 500:\n    print ' \
-               '"I will not throw paper airplanes in class."\n    count += 1\n\n### READY ###\n\n '
+               '"I will not throw paper airplanes in class."\n    count += 1\n\n### READY ###\n\n'
 
 
 def hello_world(event, context):
@@ -37,7 +37,7 @@ def hello_world(event, context):
 
     response = openai.Completion.create(
         engine="davinci-codex",
-        prompt=f"{codex_prompt} \nlanguage: {event}\nreturned_code:",
+        prompt=f"{codex_prompt} \n###{event}\n",
         temperature=0,
         max_tokens=199,
         top_p=1,
