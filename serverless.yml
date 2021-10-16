@@ -1,0 +1,82 @@
+# Welcome to Serverless!
+#
+# This file is the main config file for your service.
+# It's very minimal at this point and uses default values.
+# You can always add more config options for more control.
+# We've included some commented out config examples here.
+# Just uncomment any of them to get that config option.
+#
+# For full config options, check the docs:
+#    docs.serverless.com
+#
+# Happy Coding!
+
+service: codex-foxtrot
+# app and org for use with dashboard.serverless.com
+app: codex-foxtrot
+org: doctorew
+useDotenv: true
+
+# You can pin your service to only deploy with a specific Serverless version
+# Check out our docs for more details
+frameworkVersion: '2'
+
+provider:
+  name: aws
+  runtime: python3.8
+  lambdaHashingVersion: 20201221
+  tracing: true # enable tracing
+  iamRoleStatements:
+    - Effect: "Allow" # xray permissions (required)
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
+      Resource:
+        - "*"
+
+functions:
+  handler:
+    handler: handler.handler
+    events:
+      - http:
+          path: foxtrot
+          method: post
+          cors: true
+  hello_world:
+    handler: handler.hello_world
+    events:
+      - http:
+          path: hello_world
+          method: get
+  foxtrot:
+    handler: handler.handler
+#    environment:
+#          OPENAI_API_KEY_fake: 'psyche!'
+#          OPENAI_API_KEY: ${ssm:/OPENAI_API_KEY}
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+  dotenv:
+    path: env.env
+  required:
+    env:
+      - OPENAI_API_KEY
+    file: true
+  customDomain:
+    domainName: codex.doctorew.com
+    createRoute53Record: true
+
+package:
+  exclude:
+    - node_modules/**
+    - venv/**
+    - .git/**
+    - .idea/**
+
+plugins:
+  - serverless-domain-manager
+  - serverless-dotenv-plugin
+  - serverless-offline
+  - serverless-python-requirements
+  - serverless-plugin-tracing
