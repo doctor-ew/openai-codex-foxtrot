@@ -10,7 +10,7 @@ click==8.0.1
 et-xmlfile==1.1.0
 idna==3.2
 mypy-extensions==0.4.3
-numpy==1.21.2
+numpy==1.22.0
 openai==0.10.3
 openpyxl==3.0.7
 pandas-stubs==1.2.0.13
